@@ -1,22 +1,51 @@
+import { FormControl, AbstractControl } from '@angular/forms';
 import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FixtureGeneratorService {
-  private const MIN_TEAMS_QUANTITY = 4;
-  private const MAX_TEAMS_QUANTITY = 20;
+  // private const MIN_TEAMS_QUANTITY = 4;
+  // private const MAX_TEAMS_QUANTITY = 20;
 
   private teams: Array<any> = [];
   private lastTeamId = 0;
 
   constructor() { }
 
-  private IsDataReady(): boolean {
+  private isDataReady(): boolean {
     return true;
   }
 
-  private GetMatches(): Array<any> {
+  private isTeamAlreadyAdded(themeName: string): boolean {
+    for (let teamIndex = 0; teamIndex < this.teams.length; teamIndex++) {
+      const team = this.teams[teamIndex];
+      if (team.name === themeName) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  private getIndexFromPositionInFixture() {
+
+  }
+
+  private getFixtureStructure() {
+    const structure: Array<any> = [];
+
+    const numberOfDates = this.teams.length - 1;
+    const matchesPerDate = this.teams.length / 2;
+    for (let dateIndex = 0; dateIndex < numberOfDates; dateIndex++) {
+      for (let matchIndex = 0; matchIndex <= matchesPerDate; matchIndex++) {
+        structure[dateIndex].push([ ]);
+      }
+    }
+
+    return structure;
+  }
+
+  private getMatchesArray(): Array<any> {
     const matches: Array<any> = [];
     const lastTeamIndex = this.teams.length - 1;
 
@@ -29,22 +58,23 @@ export class FixtureGeneratorService {
     return matches;
   }
 
-  private GetMatchesByDay(): Array<any> {
-    return [];
+  private getMatchesSortedByDay(): Array<any> { // todo: re-write me completely (-:
+    const sortedMatches: Array<any> = [];
+    return sortedMatches;
   }
 
-  public GetTeams(): Array<any> {
+  public getTeams(): Array<any> {
     return this.teams.slice();
   }
 
-  public AddTeam(name: string): void {
+  public addTeam(name: string): void {
     this.teams.push({
       name: name,
       id: this.lastTeamId++
     });
   }
 
-  public RemoveTeam(id: number): void {
+  public removeTeam(id: number): void {
     for (let index = 0; index < this.teams.length; index++) {
       const team = this.teams[index];
       if (team.id === id) {
@@ -53,9 +83,13 @@ export class FixtureGeneratorService {
     }
   }
 
-  public GetFixture(): any {
-    if (this.IsDataReady()) {
-      return this.GetMatchesByDay();
+  public noRepeatNameValidator(c: AbstractControl) {
+    return this.isTeamAlreadyAdded(c.value) ? {alreadyAdded: true} : null;
+  }
+
+  public getFixture(): any {
+    if (this.isDataReady()) {
+      return this.getMatchesSortedByDay();
     }
   }
 }
