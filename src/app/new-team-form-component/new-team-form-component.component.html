@@ -1,0 +1,4 @@
+<form [formGroup]="nameForm" (ngSubmit)="addNewTeam()" >
+  <input formControlName="teamName" />
+  <button type="submit" [disabled]="nameForm.invalid">Add new team</button>
+</form>

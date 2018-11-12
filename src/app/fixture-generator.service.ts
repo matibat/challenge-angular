@@ -1,3 +1,4 @@
+import { Observable, Observer } from 'rxjs';
 import { FormControl, AbstractControl } from '@angular/forms';
 import { Injectable } from '@angular/core';
 
@@ -9,9 +10,12 @@ export class FixtureGeneratorService {
   // private const MAX_TEAMS_QUANTITY = 20;
 
   private teams: Array<any> = [];
-  private lastTeamId = 0;
+  private nextTeamId = 0;
+  private teamsObservers: Observer<any>[] = [];
 
-  constructor() { }
+  constructor() {
+    this.noRepeatNameValidator = this.noRepeatNameValidator.bind(this);
+  }
 
   private isDataReady(): boolean {
     return true;
@@ -63,22 +67,38 @@ export class FixtureGeneratorService {
     return sortedMatches;
   }
 
-  public getTeams(): Array<any> {
-    return this.teams.slice();
+  private handleTeamsUpdate(observer: Observer<any>) {
+    observer.next(this.teams);
+  }
+
+  private notifyTeamsUpdate() {
+    for (let index = 0; index < this.teamsObservers.length; index++) {
+      const observer = this.teamsObservers[index];
+      this.handleTeamsUpdate(observer);
+    }
+  }
+
+  public getTeams(): Observable<any> {
+    return new Observable((observer) => {
+      this.handleTeamsUpdate(observer);
+      this.teamsObservers.push(observer);
+    });
   }
 
   public addTeam(name: string): void {
     this.teams.push({
       name: name,
-      id: this.lastTeamId++
+      id: this.nextTeamId++
     });
+    this.notifyTeamsUpdate();
   }
 
   public removeTeam(id: number): void {
     for (let index = 0; index < this.teams.length; index++) {
       const team = this.teams[index];
       if (team.id === id) {
-        this.teams.splice(index);
+        this.teams.splice(index, 1);
+        this.notifyTeamsUpdate();
       }
     }
   }
