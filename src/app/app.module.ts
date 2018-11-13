@@ -5,12 +5,14 @@ import { AppComponent } from './app.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NewTeamFormComponentComponent } from './new-team-form-component/new-team-form-component.component';
 import { TeamListComponentComponent } from './team-list-component/team-list-component.component';
+import { FixtureComponent } from './fixture/fixture.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NewTeamFormComponentComponent,
-    TeamListComponentComponent
+    TeamListComponentComponent,
+    FixtureComponent
   ],
   imports: [
     BrowserModule,

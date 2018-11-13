@@ -22,10 +22,6 @@ export class NewTeamFormComponentComponent {
     });
   }
 
-  public isTeamSelected() {
-    return (this.newTeamName !== null);
-  }
-
   public addNewTeam() {
     const teamName = this.nameForm.controls['teamName'].value;
     this.nameForm.controls['teamName'].setValue('');
