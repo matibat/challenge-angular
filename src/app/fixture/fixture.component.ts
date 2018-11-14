@@ -9,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 export class FixtureComponent {
   fixture: Array<any>;
 
-  constructor(private fixtureGenerator: FixtureGeneratorService) { }
+  constructor(private fixtureGenerator: FixtureGeneratorService) {
+    fixtureGenerator.getTeams().subscribe(() => this.resetFixture());
+  }
 
-  public refreshFixture() {
+  public resetFixture(): void {
+    this.fixture = [];
+  }
+
+  public refreshFixture(): void {
     this.fixture = this.fixtureGenerator.getFixture();
   }
 

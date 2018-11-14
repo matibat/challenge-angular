@@ -4,10 +4,11 @@
     <button class="generate-fixture" (click)="refreshFixture()" [disabled]="!isAbleToRefresh()"> Generate fixture </button>
   </div>
   <div class="app-matches-by-day">
-    <div *ngFor="let matches of fixture">
-      <ul *ngFor="let match of matches">
-        <li>{{ getTeamName(match[0]) }} vs {{ getTeamName(match[1]) }}</li>
-      </ul>
-    </div>
+    <ul *ngFor="let matches of fixture" class="app-matches">
+      <li *ngFor="let match of matches" class="app-match">
+        <span class="first-team">{{ getTeamName(match[0]) }}</span>
+        <span calss="second-team">{{ getTeamName(match[1]) }}</span>
+      </li>
+    </ul>
   </div>
 </div>
