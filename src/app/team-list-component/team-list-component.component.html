@@ -1,7 +1,7 @@
 <div class="app-team-list">
   <div class="app-header">
     <h3> Team list </h3>
-    <button (click)="removeSelectedTeam()" [disabled]="!isTeamSelected()">Remove team</button>
+    <button (click)="removeSelectedTeam()" [disabled]="!isAnyTeamSelected()">Remove team</button>
   </div>
   <ul>
     <li *ngFor="let team of teamsList; let id = index" [ngClass]="selectedClass(id)" (click)="selectTeam(id)">

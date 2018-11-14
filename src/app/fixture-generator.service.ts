@@ -19,7 +19,7 @@ export class FixtureGeneratorService {
   }
 
   public addTeam(name: string): void {
-    this.teams.push(name);
+    this.teams.push(name.toUpperCase());
     this.notifyTeamsUpdate();
   }
 

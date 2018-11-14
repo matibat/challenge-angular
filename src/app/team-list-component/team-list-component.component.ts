@@ -33,10 +33,17 @@ export class TeamListComponentComponent {
   }
 
   public selectedClass(id): any {
-    return {'app-selected-team': this.selectedTeam === id};
+    return {
+      'app-team': true,
+      'app-selected-team': this.isTeamSelected(id)
+    };
   }
 
-  public isTeamSelected() {
+  public isTeamSelected(id) {
+    return id === this.selectedTeam;
+  }
+
+  public isAnyTeamSelected() {
     return (this.selectedTeam !== null);
   }
 }
