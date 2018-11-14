@@ -123,5 +123,10 @@
       }
     }
   },
-  "defaultProject": "challenge-angular"
+  "defaultProject": "challenge-angular",
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "scss"
+    }
+  }
 }

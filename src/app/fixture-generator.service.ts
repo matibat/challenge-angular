@@ -1,5 +1,5 @@
 import { Observable, Observer } from 'rxjs';
-import { FormControl, AbstractControl } from '@angular/forms';
+import { AbstractControl } from '@angular/forms';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -10,7 +10,6 @@ export class FixtureGeneratorService {
   private MAX_TEAMS_AMOUNT = 20;
 
   private teams: Array<any> = [ ];
-  // private nextTeamId = 1;
   private teamsObservers: Array<Observer<any>> = [];
 
   constructor() {
@@ -76,7 +75,6 @@ export class FixtureGeneratorService {
       sum = (a + b) % (this.teams.length + 1);
       if (this.isLastTeamOfCycle(a)) { sum = 2; }
     } else {
-      // if (a === 2) debugger;
       sum = (a + b) % (this.teams.length + 1);
       if (this.isFirstTeamOfCycle(sum)) { sum = this.teams.length; }
     }
