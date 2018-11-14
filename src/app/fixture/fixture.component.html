@@ -6,7 +6,7 @@
   <div class="app-matches-by-day">
     <div *ngFor="let matches of fixture">
       <ul *ngFor="let match of matches">
-        <li>{{ match[0] }} vs {{ match[1] }}</li>
+        <li>{{ getTeamName(match[0]) }} vs {{ getTeamName(match[1]) }}</li>
       </ul>
     </div>
   </div>

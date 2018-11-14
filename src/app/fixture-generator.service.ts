@@ -9,17 +9,34 @@ export class FixtureGeneratorService {
   private MIN_TEAMS_AMOUNT = 4;
   private MAX_TEAMS_AMOUNT = 20;
 
-  private teams: Array<any> = [ // todo: femove fake data
-    {id: 0, name: 'batman'},
-    {id: 1, name: 'mati'},
-    {id: 2, name: 'cacho'},
-    {id: 3, name: 'pepe'},
-  ];
-  private nextTeamId = 0;
+  private teams: Array<any> = [ ];
+  // private nextTeamId = 1;
   private teamsObservers: Array<Observer<any>> = [];
 
   constructor() {
     this.noRepeatNameValidator = this.noRepeatNameValidator.bind(this);
+    this.noExeedMaxiValidator = this.noExeedMaxiValidator.bind(this);
+  }
+
+  public addTeam(name: string): void {
+    this.teams.push(name);
+    this.notifyTeamsUpdate();
+  }
+
+  public removeTeam(id: number): void {
+    this.teams.splice(id, 1);
+    this.notifyTeamsUpdate();
+  }
+
+  public getTeams(): Observable<any> {
+    return new Observable((observer) => {
+      this.handleTeamsUpdate(observer);
+      this.teamsObservers.push(observer);
+    });
+  }
+
+  public getTeamName(id: number): string {
+    return this.teams[id - 1];
   }
 
   private getMatchesSortedByDay(): Array<any> { // todo: re-write me completely (-:
@@ -77,7 +94,7 @@ export class FixtureGeneratorService {
   private isTeamAlreadyAdded(themeName: string): boolean {
     for (let teamIndex = 0; teamIndex < this.teams.length; teamIndex++) {
       const team = this.teams[teamIndex];
-      if (team.name === themeName) {
+      if (team === themeName) {
         return true;
       }
     }
@@ -96,12 +113,20 @@ export class FixtureGeneratorService {
     return (this.teams.length % 2) === 0;
   }
 
-  public isTeamAmountNotBiggerThanMax() {
+  private isTeamAmountNotBiggerThanMax() {
     return this.teams.length <= this.MAX_TEAMS_AMOUNT;
   }
 
-  public isTeamAmountNotSmallerThanMin() {
+  private isTeamAmountNotSmallerThanMin() {
     return this.teams.length >= this.MIN_TEAMS_AMOUNT;
+  }
+
+  public isTeamAmountSmallerThanMax() {
+    return this.teams.length < this.MAX_TEAMS_AMOUNT;
+  }
+
+  public isTeamAmountBiggerThanMin() {
+    return this.teams.length > this.MIN_TEAMS_AMOUNT;
   }
 
   private totalOfMatchesByDay(): number {
@@ -123,35 +148,12 @@ export class FixtureGeneratorService {
     }
   }
 
-  // PUBLIC ACCESS MEMBERS
-
-  public getTeams(): Observable<any> {
-    return new Observable((observer) => {
-      this.handleTeamsUpdate(observer);
-      this.teamsObservers.push(observer);
-    });
-  }
-
-  public addTeam(name: string): void {
-    this.teams.push({
-      name: name,
-      id: this.nextTeamId++
-    });
-    this.notifyTeamsUpdate();
-  }
-
-  public removeTeam(id: number): void {
-    for (let index = 0; index < this.teams.length; index++) {
-      const team = this.teams[index];
-      if (team.id === id) {
-        this.teams.splice(index, 1);
-        this.notifyTeamsUpdate();
-      }
-    }
-  }
-
   public noRepeatNameValidator(c: AbstractControl) {
     return this.isTeamAlreadyAdded(c.value) ? {alreadyAdded: true} : null;
+  }
+
+  public noExeedMaxiValidator(c: AbstractControl) {
+    return !this.isTeamAmountSmallerThanMax() ? {maximumAmountReached: true} : null;
   }
 
   public getFixture(): any {

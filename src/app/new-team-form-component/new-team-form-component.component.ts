@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './new-team-form-component.component.html',
   styleUrls: ['./new-team-form-component.component.scss']
 })
-export class NewTeamFormComponentComponent {
+export class NewTeamFormComponentComponent implements OnInit {
   public nameForm: FormGroup;
   newTeamName: string;
 
@@ -16,10 +16,14 @@ export class NewTeamFormComponentComponent {
       teamName: new FormControl(this.newTeamName,
         [
           this.fixtureGenerator.noRepeatNameValidator,
+          this.fixtureGenerator.noExeedMaxiValidator,
           Validators.required
         ]
       )
     });
+  }
+
+  ngOnInit(): void {
   }
 
   public addNewTeam() {

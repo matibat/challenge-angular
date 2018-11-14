@@ -4,8 +4,8 @@
     <button (click)="removeSelectedTeam()" [disabled]="!isTeamSelected()">Remove team</button>
   </div>
   <ul>
-    <li *ngFor="let team of teamsList" [ngClass]="selectedClass(team.id)" (click)="selectTeam(team.id)">
-      {{team.name}}
+    <li *ngFor="let team of teamsList; let id = index" [ngClass]="selectedClass(id)" (click)="selectTeam(id)">
+      {{team}}
     </li>
   </ul>
 </div>

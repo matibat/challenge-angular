@@ -18,4 +18,8 @@ export class FixtureComponent {
   public isAbleToRefresh(): boolean {
     return this.fixtureGenerator.isDataReady();
   }
+
+  public getTeamName(id: number) {
+    return this.fixtureGenerator.getTeamName(id);
+  }
 }
