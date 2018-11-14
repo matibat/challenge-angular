@@ -6,8 +6,8 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class FixtureGeneratorService {
-  // private const MIN_TEAMS_QUANTITY = 4;
-  // private const MAX_TEAMS_QUANTITY = 20;
+  private MIN_TEAMS_AMOUNT = 4;
+  private MAX_TEAMS_AMOUNT = 20;
 
   private teams: Array<any> = [ // todo: femove fake data
     {id: 0, name: 'batman'},
@@ -66,20 +66,12 @@ export class FixtureGeneratorService {
     return sum;
   }
 
-  private isFirstOrLastTeamIndex(index: number): boolean {
-    return index === 0 || index === 1 || index === 2 || index === this.teams.length;
-  }
-
   private isFirstTeamOfCycle(index: number) {
     return index < 2;
   }
 
   private isLastTeamOfCycle(index: number) {
     return index === this.teams.length;
-  }
-
-  private isDataReady(): boolean {
-    return true;
   }
 
   private isTeamAlreadyAdded(themeName: string): boolean {
@@ -90,6 +82,26 @@ export class FixtureGeneratorService {
       }
     }
     return false;
+  }
+
+  public isDataReady(): boolean {
+    return (
+      this.isTeamAmountPair() &&
+      this.isTeamAmountNotBiggerThanMax() &&
+      this.isTeamAmountNotSmallerThanMin()
+    );
+  }
+
+  private isTeamAmountPair() {
+    return (this.teams.length % 2) === 0;
+  }
+
+  public isTeamAmountNotBiggerThanMax() {
+    return this.teams.length <= this.MAX_TEAMS_AMOUNT;
+  }
+
+  public isTeamAmountNotSmallerThanMin() {
+    return this.teams.length >= this.MIN_TEAMS_AMOUNT;
   }
 
   private totalOfMatchesByDay(): number {

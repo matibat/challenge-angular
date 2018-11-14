@@ -1,8 +1,13 @@
 <div class="app-fixture">
-  <button class="generate-fixture" (click)="refreshFixture()"> Generate fixture </button>
-  <div *ngFor="let matches of fixture">
-    <ul *ngFor="let match of matches">
-      <li>{{ match[0] }} vs {{ match[1] }}</li>
-    </ul>
+  <div class="app-header">
+    <h3> Fixture </h3>
+    <button class="generate-fixture" (click)="refreshFixture()" [disabled]="!isAbleToRefresh()"> Generate fixture </button>
+  </div>
+  <div class="app-matches-by-day">
+    <div *ngFor="let matches of fixture">
+      <ul *ngFor="let match of matches">
+        <li>{{ match[0] }} vs {{ match[1] }}</li>
+      </ul>
+    </div>
   </div>
 </div>

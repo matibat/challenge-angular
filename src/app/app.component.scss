@@ -1,13 +1,49 @@
-.app-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+@import './app.constant.scss';
 
-  background-color: aliceblue;
-}
-
-.app-body {
+.app-wrapper {
   display: flex;
-  flex-flow: row;
-  justify-content: center;
+  flex-flow: column;
+  height: 100vh;
+
+  .app-header {
+    display: flex;
+    flex-basis: 5rem;
+    flex-grow: 0;
+    justify-content: space-between;
+    align-items: center;
+    background-color: darkgray;
+
+    h3 {
+      color: $focus-color;
+      margin-left: 2.5rem;
+    }
+  }
+
+  .app-body {
+    display: flex;
+    flex-grow: 1;
+    flex-flow: row;
+    justify-content: center;
+    padding-bottom: 5rem;
+    background-color: $bg-color;
+
+    .app-columns-wrapper {
+      display: flex;
+      flex-flow: row;
+      width: 60%;
+      background-color: $focus-color;
+
+      .app-first-column {
+        display: flex;
+        flex-grow: 1;
+        border-right-style: solid;
+        border-color: $bg-color;
+
+      }
+      .app-second-column {
+        display: flex;
+        flex-grow: .618;
+      }
+    }
+  }
 }

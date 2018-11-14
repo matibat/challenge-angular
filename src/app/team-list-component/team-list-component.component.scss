@@ -1,5 +1,19 @@
-app-team-list {
-  display: flex;
-  flex-grow: .618;
-  flex-flow: column;
+:host {
+  width: 100%;
+
+    .app-team-list {
+    display: flex;
+    flex-grow: .618;
+    flex-flow: column;
+
+    .app-header {
+      display: flex;
+      flex-flow: row;
+      justify-content: space-evenly;
+    }
+
+    .app-selected-team {
+      background-color: darkgray;
+    }
+  }
 }

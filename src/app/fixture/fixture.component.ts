@@ -14,4 +14,8 @@ export class FixtureComponent {
   public refreshFixture() {
     this.fixture = this.fixtureGenerator.getFixture();
   }
+
+  public isAbleToRefresh(): boolean {
+    return this.fixtureGenerator.isDataReady();
+  }
 }
