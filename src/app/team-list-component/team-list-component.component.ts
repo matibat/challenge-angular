@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'app-team-list-component',
   templateUrl: './team-list-component.component.html',
-  styleUrls: ['./team-list-component.component.css']
+  styleUrls: ['./team-list-component.component.scss']
 })
 export class TeamListComponentComponent {
   public teamsList: any;

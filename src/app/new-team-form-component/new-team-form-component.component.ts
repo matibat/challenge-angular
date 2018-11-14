@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-new-team-form-component',
   templateUrl: './new-team-form-component.component.html',
-  styleUrls: ['./new-team-form-component.component.css']
+  styleUrls: ['./new-team-form-component.component.scss']
 })
 export class NewTeamFormComponentComponent {
   public nameForm: FormGroup;

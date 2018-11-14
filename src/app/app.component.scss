@@ -1,0 +1,13 @@
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background-color: aliceblue;
+}
+
+.app-body {
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+}
